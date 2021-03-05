@@ -1,0 +1,114 @@
+:root{
+    --primary : rgb(221, 221, 221);
+    --secondary : #00917c;
+    --third : #d6b0b1;
+    --dark : #374045;
+    --light: #f8f1f1;
+    --danger : #ef4f4f;
+}
+
+.funniture-bg-primary{
+    background-color: var(--primary);
+}
+
+.funniture-bg-secondary{
+    background-color: var(--secondary);
+}
+
+.funniture-bg-third{
+    background-color: var(--third);
+}
+
+.funniture-bg-dark{
+    background-color: var(--dark);
+}
+
+.funniture-bg-light{
+    background-color: var(--light);
+}
+
+.funniture-bg-danger{
+    background-color: var(--danger);
+}
+
+/* font color */
+
+.funniture-primary{
+    background-color: var(--primary);
+}
+
+.funniture-secondary{
+    background-color: var(--secondary);
+}
+
+.funniture-third{
+    background-color: var(--third);
+}
+
+.funniture-dark{
+    background-color: var(--dark);
+}
+
+.funniture-light{
+    background-color: var(--light);
+}
+
+.funniture-danger{
+    background-color: var(--danger);
+}
+
+/* Font Size */
+
+.funniture-font-size-10{
+    font-size: 10px;
+}
+
+.funniture-font-size-12{
+    font-size: 12px;
+}
+
+.funniture-font-size-14{
+    font-size: 14px;
+}
+
+.funniture-font-size-16{
+    font-size: 16px;
+}
+
+.funniture-font-size-18{
+    font-size: 18px;
+}
+
+.funniture-font-size-20{
+    font-size: 20px;
+}
+
+.funniture-font-size-24{
+    font-size: 24px;
+}
+
+.funniture-font-size-28{
+    font-size: 28px;
+}
+
+.funniture-font-size-32{
+    font-size: 32px;
+}
+
+/* font style */
+
+.funniture-font-bold{
+    font-weight: bold;
+}
+
+.funniture-font-italic{
+    font-style: italic;
+}
+
+.funniture-clickable-element{
+    cursor: pointer;
+    -webkit-user-select: none; /* Safari */        
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* IE10+/Edge */
+    user-select: none; /* Standard */
+}

@@ -1,0 +1,24 @@
+.jumbotron-landing-page{
+    background-image: url('https://nodaheights.com/wp-content/uploads/2017/08/Furniture-Background-Image.jpg');
+    height: 75vh;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.papilio-garis{
+    width: 120px;
+    height: 2px;
+    background: black;
+    margin-top: 25px;
+    margin-bottom: 50px
+}
+
+.karusel{
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    margin: 0px;
+    padding: 0px
+}

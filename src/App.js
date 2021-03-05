@@ -1,25 +1,37 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react'
+import Navbar from './Components/navbar'
+import Footer from './Components/footer'
+import Register from './Pages/Register'
+import LandingPage from './Pages/LandingPage'
+import RegisterPassword from './Pages/RegisterPassword'
+import ProductPage from './Pages/ProductPage'
+import KatalogProduk from './Pages/KatalogProduk'
+// css
+import './Supports/Stylesheets/Utils.css'
+import './Supports/Stylesheets/LandingPage.css'
+import './Supports/Stylesheets/KatalogProduk.css'
+import { BrowserRouter, Switch, Route } from 'react-router-dom'
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+
+
+export default class App extends React.Component{
+  render(){
+    return (
+      <>  
+        <BrowserRouter>
+          <Navbar />
+          <Switch>
+            <Route exact path='/' component={LandingPage} />
+            <Route path='/register' component={Register} />
+            <Route path='/register-password' component={RegisterPassword} />
+            <Route path='/productpage' component={ProductPage} />
+            <Route path='/katalogproduk' component={KatalogProduk} />
+          </Switch>
+          <Footer />       
+        </BrowserRouter>
+      </>
+    )
+  }
 }
 
-export default App;
+

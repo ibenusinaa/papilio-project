@@ -1,0 +1,43 @@
+   {/* <div style={{width: '100%'}}>
+                <Slider {...settings} className='mb-5'>
+                <div>
+                    <div style={{margin: '120px 20px' }}>
+                        <img src='https://nodaheights.com/wp-content/uploads/2017/08/Furniture-Background-Image.jpg' alt='' style={{width: '100%', height: '45vh'}} />
+                        <h5 style={{position: 'relative', top: '-70px'}}>Testing tulisan</h5>   
+                    </div>
+                </div>
+                <div>
+                    <div style={{margin: '120px 20px' }}>
+                        <img src='https://www.hants.gov.uk/-/media/Images/wasteandrecycling/loveyourfurniture/loveyourplanet-banner.jpg' alt='' style={{width: '100%', height: '45vh'}} />
+                        <h5 style={{position: 'relative', top: '-70px'}}>Testing tulisan</h5>   
+                    </div>
+                </div>
+                <div>
+                    <img src='https://www.desktopbackground.org/download/2560x1440/2012/07/22/425032_furniture-computer-wallpapers-desktop-backgrounds_2560x1600_h.jpg' alt='' style={{width: '100%', height: '75vh'}} />
+                </div>
+                <div>
+                    <img src='https://www.malls.com/upload/medialibrary/1a2/91548626_3345983715416117_8843622380141019136_o.jpg' alt='' style={{width: '100%', height: '75vh'}} />
+                </div>
+                <div>
+                    <img src='https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?ixid=MXwxMjA3fDB8MHxzZWFyY2h8NXx8cm9vbXxlbnwwfHwwfA%3D%3D&ixlib=rb-1.2.1&w=1000&q=80' alt='' style={{width: '100%', height: '75vh'}} />
+                </div>
+                <div>
+                    <img src='https://images.creativemarket.com/0.1.0/ps/1795272/1360/942/m1/fpnw/wm1/xo2tvsagfogsz5h1wrfa9nmwwrz2shkk4c0vrtydf5bahdrsrxpgtxi2ujelwenp-.jpg?1477298659&s=c2f246e6834889c3dfe97cf4b28c849d' alt='' style={{width: '100%', height: '75vh'}} />
+                </div>
+                </Slider>
+            </div> */}
+
+                <div key={index} className="col-3" style={{width: '18rem'}}>
+                    <div className = 'col-12 border border-black my-1' style={{height: '380px'}}>
+                        <img className="card-img-top" src={value.image1} alt="Card image cap" style={{height:'200px'}} />
+                        <div className="card-body">
+                            <h5 className="card-title">{value.nama} {value.brand}</h5>
+                            <p className="card-text font-weight-bold">Rp{value.price}</p>
+                            <p className="card-text mt-n3">stok:{value.stock}</p>
+                        </div>
+                    </div>
+                </div> 
+
+
+
+       
