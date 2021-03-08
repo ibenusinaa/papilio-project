@@ -319,6 +319,25 @@
       "image3": "https://d2xjmi1k71iy2m.cloudfront.net/dairyfarm/id/images/682/0468295_PE611365_S4.jpg"
     }
   ],
-  "carts": [],
+  "carts": [
+    {
+      "idProduct": "19",
+      "idUser": "4",
+      "quantity": 1,
+      "id": 1
+    },
+    {
+      "idProduct": "2",
+      "idUser": "4",
+      "quantity": 3,
+      "id": 2
+    },
+    {
+      "idProduct": "6",
+      "idUser": "4",
+      "quantity": 1,
+      "id": 3
+    }
+  ],
   "transactions": []
 }

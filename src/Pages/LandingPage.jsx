@@ -2,7 +2,7 @@ import axios from 'axios';
 import React from 'react';
 import Slider from "react-slick";
 import LinkAPIProducts from './../Supports/Constants/LinkAPIProducts'
-
+import {Link} from 'react-router-dom'
 export default class LandingPage extends React.Component{
 
     state = {
@@ -33,13 +33,18 @@ export default class LandingPage extends React.Component{
      
                      <div key={index} className='mb-5' style={{width: '18rem'}}>
                          <div className = 'card mx-3' style={{height: '410px'}}>
-                             <img className="card-img-top" src={value.image1} alt="Card image cap" style={{height:'200px'}} />
+                             <Link to = {`/productpage/${value.id}`}>
+                                <img className="card-img-top" src={value.image1} alt="foto" style={{height:'200px'}} />
+                             </Link>
                              <div className="card-body">
-                                 <h5 className="card-title">{value.nama} {value.brand}</h5>
+                                <h5 className="card-title">{value.brand}</h5>
+                                <p className="card-text mt-n3">{value.nama}</p>
                                  <p className="card-text font-weight-bold">Rp{(value.price - ((value.price * value.diskon)/100)).toLocaleString()}</p>
                                  <p className="card-text mt-n4" style={{textDecoration: 'line-through'}}> Rp{value.price.toLocaleString()}</p>
-                                 <p className="card-text font-weight-bold mt-n3">DISKON{value.diskon}%</p>
-                                 <p className="card-text mt-n3">stok: {value.stock}</p>
+                                 <div className="card-text font-weight-bold mt-n3 text-white d-flex justify-content-center" style={{backgroundColor: '#d9534f', width:'80px'}}>
+                                     {value.diskon}% OFF!
+                                 </div>
+                                 <div className="card-text">{value.stock} stok tersisa</div>
                              </div>
                          </div>
                      </div>        
@@ -82,7 +87,7 @@ export default class LandingPage extends React.Component{
                         <div className='d-flex align-items-center jumbotron-landing-page'>
                             <div className="container text-center text-md-left">
                                 <h1 className='funniture-font-size-70'>
-                                    Sale Up To 25%
+                                    Sale Up To 30%
                                 </h1>
                                 <input type='button' className='btn btn-warning' value='Shop Now!' />
                             </div>

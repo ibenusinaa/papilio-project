@@ -1,8 +1,8 @@
 import React from 'react'
 import Axios from 'axios'
 import LinkAPIProducts from './../Supports/Constants/LinkAPIProducts'
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
-
+import { Modal, ModalBody} from 'reactstrap';
+import { Link } from 'react-router-dom'
 
 export default class KatalogProduk extends React.Component{
 
@@ -59,8 +59,6 @@ export default class KatalogProduk extends React.Component{
             })
             // console.log(arrBrand)
             this.setState({category: arrCategory, brand: arrBrand})
-            console.log(this.state.category)
-            console.log(this.state.brand)
         })
         .catch((err) =>{
             console.log(err)
@@ -130,9 +128,12 @@ export default class KatalogProduk extends React.Component{
                if(value.diskon > 0){
                    return(
                     <>
-                        <div key={index} className='col-4 mb-4 d-none d-sm-none d-md-block d-lg-block d-xl-block'>
+                        {/* Desktop */}
+                        <div key={index} className='col-md-4 col-6 mb-4'>
                             <div className = 'mx-3' style={{height: '410px'}}>
-                                <img className="card-img-top" src={value.image1} alt="Card image cap" style={{height:'240px'}} />
+                                <Link to = {`/productpage/${value.id}`}>
+                                    <img className="card-img-top" src={value.image1} alt="foto" style={{height:'240px'}} />
+                                </Link>
                                 <div className="card-body">
                                     <h5 className="card-title">{value.brand}</h5>
                                     <p className="card-text mt-n3">{value.nama}</p>
@@ -145,29 +146,16 @@ export default class KatalogProduk extends React.Component{
                                 </div>
                             </div>
                         </div>
-                        <div key={index} className='col-6 mb-4 d-block d-sm-block d-md-none d-lg-none d-xl-none'>
-                            <div className = 'mx-3' style={{height: '410px'}}>
-                                <img className="card-img-top" src={value.image1} alt="Card image cap" style={{height:'240px'}} />
-                                <div className="card-body">
-                                    <h5 className="card-title">{value.brand}</h5>
-                                    <p className="card-text mt-n3">{value.nama}</p>
-                                    <p className="card-text font-weight-bold mt-n2">Rp{(value.price - ((value.price * value.diskon)/100)).toLocaleString()}</p>
-                                    <p className="card-text mt-n4" style={{textDecoration: 'line-through'}}> Rp{value.price.toLocaleString()}</p>
-                                    <div className="card-text font-weight-bold mt-n3 rounded text-white d-flex justify-content-center" style={{backgroundColor: '#d9534f', width:'45px', position: 'relative', top: '-310px', left: '-12px'}}>
-                                        {value.diskon}%
-                                    </div>
-                                    <p className="card-text mt-n3">stok: {value.stock}</p>
-                                </div>
-                            </div>
-                        </div>
                     </>         
                    ) 
                }else{
                    return(
                     <>
-                        <div key={index} className='col-4 mb-4 d-none d-sm-none d-md-block d-lg-block d-xl-block'>
+                        <div key={index} className='col-md-4 col-6 mb-4'>
                             <div className = ' mx-3' style={{height: '410px'}}>
-                                <img className="card-img-top" src={value.image1} alt="Card image cap" style={{height:'240px'}} />
+                                <Link to = {`/productpage/${value.id}`}>
+                                    <img className="card-img-top" src={value.image1} alt="foto" style={{height:'240px'}} />
+                                </Link>
                                 <div className="card-body">
                                     <h5 className="card-title">{value.brand}</h5>
                                     <p className="card-text mt-n3">{value.nama}</p>
@@ -176,19 +164,6 @@ export default class KatalogProduk extends React.Component{
                                 </div>
                             </div>
                         </div>
-                        <div key={index} className='col-6 mb-4 d-block d-sm-block d-md-none d-lg-none d-xl-none'>
-                            <div className = ' mx-3' style={{height: '410px'}}>
-                                <img className="card-img-top" src={value.image1} alt="Card image cap" style={{height:'240px'}} />
-                                <div className="card-body">
-                                    <h5 className="card-title">{value.brand}</h5>
-                                    <p className="card-text mt-n3">{value.nama}</p>
-                                    <p className="card-text"> Rp{value.price.toLocaleString()}</p>
-                                    <p className="card-text">stok: {value.stock}</p>
-                                </div>
-                            </div>
-                        </div>  
-
-
                     </>        
                    )
                }

@@ -1,10 +1,10 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faShoppingBag, faHeart, faUser, faBars, faSearch} from '@fortawesome/free-solid-svg-icons';
-import { Link } from 'react-router-dom';
+import { faShoppingBag, faHeart, faUser, faBars, faWindowRestore} from '@fortawesome/free-solid-svg-icons';
+import { Link} from 'react-router-dom';
 import axios from 'axios';
 import LinkAPI from './../Supports/Constants/LinkAPI'
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
+import {Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 
 
 export default class Navbar extends React.Component{
@@ -12,7 +12,9 @@ export default class Navbar extends React.Component{
     state = {
         username: null,
         error: null,
-        showModal: false
+        showModal: false,
+        dataKeranjang: null,
+        keranjang: 0
     }
 
     componentDidMount(){
@@ -21,12 +23,26 @@ export default class Navbar extends React.Component{
 
     getUsername = () => {
         // Ambil ID dari local storage
+        // ambil kerannjang
         let id = localStorage.getItem('id')
-
+        if(id){
+            axios.get(`http://localhost:2000/carts?idUser=${id}`)
+            .then((res) => {
+                this.setState({dataKeranjang: res.data})
+                this.state.dataKeranjang.forEach((value, index)=>{
+                    let keranjangSekarang = this.state.keranjang
+                    let tambahKeranjang = this.state.dataKeranjang[index].quantity
+                    this.setState({keranjang : keranjangSekarang + tambahKeranjang })
+                })
+            })
+            .catch((err) =>{
+                console.log(err)
+            })
+        }
+        // ambil username
         if(id){
             axios.get(LinkAPI + `/${id}`) //ngambil di id berapa lewat page
             .then((res) => {
-                console.log(res)
                 this.setState({username: res.data.username})
             })
             .catch((err) => {
@@ -159,8 +175,20 @@ export default class Navbar extends React.Component{
                                         <FontAwesomeIcon icon={faHeart} className ='fa-lg' />
                                     </span>
                                     <span className= 'mx-2'>
-                                        <FontAwesomeIcon icon={faShoppingBag} className ='fa-lg' />
+                                        <Link to = '/cartpage'>
+                                            <FontAwesomeIcon icon={faShoppingBag} className ='fa-lg text-body' />
+                                        </Link>
                                     </span>
+                                    {/* show angka keranjang */}
+                                    {
+                                        this.state.keranjang !== 0?
+                                            <span className='text-white rounded-circle d-flex justify-content-center funniture-font-size-12' style={{backgroundColor: '#d9534f', width:'18px', position: 'relative', left:'-15px', top:'-8px'}}>
+                                                {this.state.keranjang}
+                                            </span>
+                                        :
+                                            null
+                                    }
+                                       
                                 </div>
                             </div>
                         </div>
@@ -187,6 +215,14 @@ export default class Navbar extends React.Component{
                                 <span className= 'mx-3 d-block d-md-none'>
                                     <FontAwesomeIcon icon={faBars} className ='fa-lg' />
                                 </span>
+                                {
+                                    this.state.keranjang !== 0?
+                                        <span className='text-white rounded-circle d-flex justify-content-center funniture-font-size-12' style={{backgroundColor: '#d9534f', width:'18px', position: 'relative', left:'-74px', top:'-8px'}}>
+                                            {this.state.keranjang}
+                                        </span>
+                                    :
+                                        null
+                                }
                             </div>
                         </div>
                     </div>
