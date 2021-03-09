@@ -1,8 +1,158 @@
 import React from 'react'
 import axios from 'axios'
+import swal from 'sweetalert';
+import { Link } from 'react-router-dom'
 
 export default class CartPage extends React.Component{
+
+    state = {
+        dataProducts: null,
+        dataCarts: null,
+        totalItem: 0,
+        totalPrice: 0
+    }
+
+    componentDidMount(){
+        this.getDataCarts()
+    }
+
+    getDataCarts = () =>{
+        let id = localStorage.getItem('id')
+
+        axios.get(`http://localhost:2000/carts?idUser=${id}`)
+        .then((res)=>{
+            let linkURL = ''
+            res.data.forEach((value, index)=>{
+                linkURL += `id=${value.idProduct}&`
+            })
+            
+            res.data.sort((a,b) => {
+                return a.idProduct - b.idProduct
+            })
+
+            this.setState({dataCarts: res.data})
+            console.log(this.state.dataCarts)
+
+            axios.get(`http://localhost:2000/products?${linkURL}`)
+            .then((res) =>{
+                this.setState({dataProducts: res.data})
+                console.log(this.state.dataProducts)
+                this.getOrderSummary()
+            })
+            .catch((err) => {
+                console.log(err)
+            })
+        
+
+        })
+        .catch((err)=>{
+            console.log(err)
+        })
+    }
+
+    getOrderSummary = () =>{
+        let totalItem = 0
+        let totalPrice = 0
+
+        this.state.dataCarts.forEach((value, index) => {
+            totalItem += value.quantity
+            if(this.state.dataProducts[index].diskon === 0){
+                totalPrice += (this.state.dataProducts[index].price * value.quantity)
+            }else{
+                totalPrice += (this.state.dataProducts[index].price - ((this.state.dataProducts[index].price * this.state.dataProducts[index].diskon)/100))
+            }
+        })
+        this.setState({totalItem: totalItem, totalPrice: totalPrice})
+    }
+
+    updateQuantityProduct = (button, idCart, quantity) =>{
+        let quantitySebelumnya = quantity
+        let quantityTerbaru = 0
+
+        if(button === 'Plus'){
+            quantityTerbaru = quantitySebelumnya + 1
+        }else{
+            quantityTerbaru = quantitySebelumnya - 1
+        }
+
+        // lanjut diupdate pake patch, ingat kalau patch dan delete butuh idProductnya
+        axios.patch(`http://localhost:2000/carts/${idCart}`, {quantity: quantityTerbaru})
+        .then((res)=>{
+            console.log(res)
+            if(res.status === 200){
+                this.getDataCarts()
+            }
+        })
+        .catch((err)=>{
+            console.log(err)
+        })
+        
+    }
+
+    deleteProduct = (idCart) => {
+        swal({
+            title: "Are you sure want to delete this product?",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+          })
+          .then((willDelete) => {
+            if(willDelete){
+                axios.delete(`http://localhost:2000/carts/${idCart}`)
+                .then((res) => {
+                    swal({
+                        title: "Product delete succesfull!",
+                        icon: "success",
+                        button: "Ok",
+                    });
+
+                    this.getDataCarts()
+                    window.location='http://localhost:3000/cartpage'
+                    
+                })
+                .catch((err) => {
+                    swal({
+                        title: {err},
+                        icon: "cancel",
+                        button: "Ok",
+                    });
+                })
+            } else {
+              
+            }
+          });
+    }
+
+    // showProduct = () =>{
+    //     console.log('masuk')
+    //     if(this.state.dataCarts !== null || this.state.dataProducts !== null){
+    //         this.state.dataCarts.map((value, index)=>{
+    //             return(
+    //                 <div key={index} className='row my-2'>
+    //                     <div className ='col-4 '>
+    //                         <img src={this.state.dataProducts[index].image1} className='ml-3' style={{height:'100%', width:'100%'}} />
+    //                     </div>
+    //                     <div className ='col-8'>
+    //                         <div className='ml-3'>
+    //                             <h4>{this.state.dataProducts[index].brand}</h4>
+    //                             <h6 className='mt-n2'>{this.state.dataProducts[index].nama}</h6>
+    //                             <p>Jumlah item: 1</p>
+    //                             <h5>Rp{this.state.dataProducts[index].price.toLocaleString()}</h5>
+    //                         </div>
+    //                     </div>
+    //                 </div>
+    //             )
+    //         })
+    //     }
+
+    // }
+
     render(){
+        if(this.state.dataCarts === null || this.state.dataProducts === null){
+            return(
+                null
+            )
+        }
         return(
             <>
                 <div className = 'bg-light'>
@@ -18,32 +168,52 @@ export default class CartPage extends React.Component{
                                         </h3>
                                         <hr/>
                                     </div>
-                                    <div className='row my-2'>
-                                        <div className ='col-4 '>
-                                            <img src='https://nodaheights.com/wp-content/uploads/2017/08/Furniture-Background-Image.jpg' className='ml-3' style={{height:'100%', width:'100%'}} />
-                                        </div>
-                                        <div className ='col-8'>
-                                            <div className='ml-3'>
-                                                <h4>Nama Brand</h4>
-                                                <h6 className='mt-n2'>Lampu lantai/ baca, aluminium</h6>
-                                                <p>Jumlah item: 1</p>
-                                                <h5>Rp800.000</h5>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className='row my-2'>
-                                        <div className ='col-4'>
-                                            <img src='https://nodaheights.com/wp-content/uploads/2017/08/Furniture-Background-Image.jpg' className='ml-3' style={{height:'100%', width:'100%'}} />
-                                        </div>
-                                        <div className ='col-8'>
-                                            <div className='ml-3'>
-                                                <h4>Nama Brand</h4>
-                                                <h6 className='mt-n2'>Lampu lantai/ baca, aluminium</h6>
-                                                <p>Jumlah item: 1</p>
-                                                <h5>Rp800.000</h5>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    {
+                                        this.state.dataCarts.map((value, index)=>{
+                                            return(
+                                                <div key={index} className='row my-2'>
+                                                    <div className ='col-4 '>
+                                                        <img src={this.state.dataProducts[index].image1} className='ml-3' style={{height:'100%', width:'100%'}} />
+                                                    </div>
+                                                    <div className ='col-8'>
+                                                        <div className='ml-3'>
+                                                            <h4>{this.state.dataProducts[index].brand}</h4>
+                                                            <h6 className='mt-n2'>{this.state.dataProducts[index].nama}</h6>
+                                                
+                                                            <h5>{
+                                                                    this.state.dataProducts[index].diskon === 0?
+                                                                        `Rp${this.state.dataProducts[index].price.toLocaleString()}`
+                                                                    :
+                                                                        `Rp${(this.state.dataProducts[index].price - ((this.state.dataProducts[index].price * this.state.dataProducts[index].diskon)/100)).toLocaleString()}`
+                                                                
+                                                                }
+                                                            </h5>
+                                                        </div>
+                                                        <div className='ml-3 d-flex align-items-center'>
+                                                        Jumlah item: 
+                                                        
+                                                        <button disabled={value.quantity === 1? true : false} className='btn btn-warning ml-2 d-flex align-items-center' style={{height: '25px'}} onClick={() => this.updateQuantityProduct('Minus', value.id, value.quantity)}>
+                                                            -
+                                                        </button> 
+                                                        
+                                                        <span className='mx-3'>
+                                                                {value.quantity}
+                                                        </span>
+                                                        <button disabled={value.quantity === this.state.dataProducts[index].stock? true : false} className='btn btn-warning d-flex align-items-center' style={{height: '25px'}} onClick={() => this.updateQuantityProduct('Plus', value.id, value.quantity)}>
+                                                                +
+                                                        </button>
+                                                        </div>
+                                                        <div className='mt-3 ml-3'>
+                                                            <button className='btn btn-danger' onClick={() => this.deleteProduct(value.id)}>
+                                                                Delete
+                                                            </button>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            )
+                                        })
+                                    }
                                 </div>
                             </div>
 
@@ -60,7 +230,7 @@ export default class CartPage extends React.Component{
                                                     Items Total
                                                 </div>
                                                 <div>
-                                                    Rp1.600.000
+                                                    {this.state.totalItem}
                                                 </div>
                                             </div>
                                             <div className ='d-flex justify-content-between my-2'>
@@ -79,7 +249,7 @@ export default class CartPage extends React.Component{
                                                 <h5>Order Total</h5>
                                             </div>
                                             <div>
-                                                <h5>Rp1.600.000</h5>
+                                                <h5>Rp{this.state.totalPrice.toLocaleString()}</h5>
                                             </div>
                                         </div> 
                                     </div> 
@@ -92,7 +262,9 @@ export default class CartPage extends React.Component{
                                             <input type='button' value='Continue Shopping' className ='btn btn-outline-dark' />
                                         </div>
                                         <div className = 'ml-3'>
-                                            <input type='button' value='Checkout' className ='btn btn-warning' />
+                                            <Link to ='/payment'>
+                                                <input type='button' value='Checkout' className ='btn btn-warning' />
+                                            </Link>
                                         </div>
                                 </div>
                             </div>

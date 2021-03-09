@@ -3,6 +3,7 @@ import Axios from 'axios';
 import LinkAPI from '../Supports/Constants/LinkAPI';
 import PhoneNumberValidator from './../Supports/Functions/phoneNumber'
 import EmailValidator from './../Supports/Functions/emailValidator'
+import { Redirect } from 'react-router';
 
 
 export default class Register extends React.Component{
@@ -11,6 +12,16 @@ export default class Register extends React.Component{
         error: null,
         phoneNumber:  null,
         email: null
+    }
+
+    componentDidMount(){
+        let id = localStorage.getItem('id')
+
+        if(id){
+            window.location ='/'
+        }else{
+            
+        }
     }
 
     submitRegister = () => {

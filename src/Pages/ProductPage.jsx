@@ -1,10 +1,15 @@
 import axios from 'axios'
 import React from 'react'
+import { connect } from 'react-redux'
 
-export default class ProductPage extends React.Component{
+// Action Redux
+import { getDataCart } from './../redux/Actions/CartAction' 
+
+class ProductPage extends React.Component{
 
     state = {
         dataProduct: null,
+        mainImage: null,
     }
 
     componentDidMount(){
@@ -13,6 +18,7 @@ export default class ProductPage extends React.Component{
         axios.get(`http://localhost:2000/products/${idProduct}`)
         .then((res) => {
             this.setState({dataProduct: res.data})
+            this.setState({mainImage: res.data.image1})
             
         })
         .catch((err)=>{
@@ -22,42 +28,51 @@ export default class ProductPage extends React.Component{
     }
     
     addToCart = () => {
-        let idProduct = this.props.location.pathname.split('/')[2]
-        let idUser = localStorage.getItem('id')
-        console.log(idProduct)
-        console.log(idUser)
-        // idUSer buat nyari tau user mana yang pesen item tersebut
-        let dataToSend = {
-            idProduct: idProduct,
-            idUser: idUser,
-            quantity: 1
-        }
-        // cek dulu pakai get
-        axios.get(`http://localhost:2000/carts?idProduct=${idProduct}`)
-        .then((res) => {
-            if(res.data.length === 0){ //kalau ga ada post     
-                axios.post('http://localhost:2000/carts/', dataToSend)
-                .then((res)=> {
-                    window.location =`http://localhost:3000/productpage/${idProduct}`
-                })
-                .catch((err) => {
+    //     let idProduct = this.props.location.pathname.split('/')[2]
+    //     let idUser = localStorage.getItem('id')
+    //     console.log(idProduct)
+    //     console.log(idUser)
+    //     // idUSer buat nyari tau user mana yang pesen item tersebut
+    //     let dataToSend = {
+    //         idProduct: idProduct,
+    //         idUser: idUser,
+    //         quantity: 1
+    //     }
+    //     // cek dulu pakai get
+    //     axios.get(`http://localhost:2000/carts?idProduct=${idProduct}`)
+    //     .then((res) => {
+    //         if(res.data.length === 0){ //kalau ga ada post     
+    //             axios.post('http://localhost:2000/carts/', dataToSend)
+    //             .then((res)=> {
+    //                 window.location =`http://localhost:3000/productpage/${idProduct}`
+    //             })
+    //             .catch((err) => {
 
-                })
-            }else{ // kalau ada kita patch ajaa
-                let qtyOnDb = res.data[0].quantity //buat nyari tau qty item yang di db ada berapa
-                let idProdOnDb = res.data[0].id //buat nyari tau dia id nomer berapa di db carts
-                axios.patch(`http://localhost:2000/carts/${idProdOnDb}`, {quantity: qtyOnDb + 1 }) //cara patch harus ada idnya
-                .then((res)=>{
-                    window.location =`http://localhost:3000/productpage/${idProduct}`
-                })
-                .catch((err)=>{
+    //             })
+    //         }else{ // kalau ada kita patch ajaa
+    //             let qtyOnDb = res.data[0].quantity //buat nyari tau qty item yang di db ada berapa
+    //             let idProdOnDb = res.data[0].id //buat nyari tau dia id nomer berapa di db carts
+    //             axios.patch(`http://localhost:2000/carts/${idProdOnDb}`, {quantity: qtyOnDb + 1 }) //cara patch harus ada idnya
+    //             .then((res)=>{
+    //                 window.location =`http://localhost:3000/productpage/${idProduct}`
+    //             })
+    //             .catch((err)=>{
 
-                })
+    //             })
+    //         }
+    //     })
+    //     .catch((err) => {
+    //         console.log(err)
+    //     })
+
+            let idProduct = this.props.location.pathname.split('/')[2]
+            let idUser = localStorage.getItem('id')
+            let quantity = 1
+            if(idUser === null){
+                window.location = '/register'
             }
-        })
-        .catch((err) => {
-            console.log(err)
-        })
+
+            this.props.getDataCart(idProduct, idUser, quantity)
     }
 
 
@@ -71,17 +86,17 @@ export default class ProductPage extends React.Component{
                             <div className='col-12 col-md-6'>
                                 {/* gambar */}
                                 <div className='col-12 mt-3 ml-2 d-flex justify-content-center' style={{height:'300px'}}>
-                                    <img src= {this.state.dataProduct.image1} alt='' style={{width: '80%', height: '300px'}} />
+                                    <img src= {this.state.mainImage} alt='' style={{width: '80%', height: '300px'}} />
                                 </div>
                                 <div className='d-flex col-12 mt-3' style={{height:'200px'}}>
                                     <div className='col-4 ml-n2 mr-2' style={{height:'130px'}}>
-                                        <img src= {this.state.dataProduct.image1} alt='' style={{width: '100%', height: '100%'}} />
+                                        <img src= {this.state.dataProduct.image1} alt='' className={this.state.mainImage === this.state.dataProduct.image1? 'border border-warning' : ''} style={{width: '100%', height: '100%'}} onClick ={() => this.setState({mainImage: this.state.dataProduct.image1})} />
                                     </div>
                                     <div className='col-4 mx-2' style={{height:'130px'}}>
-                                        <img src= {this.state.dataProduct.image2} alt ='' style={{width: '100%', height: '100%'}} />
+                                        <img src= {this.state.dataProduct.image2} className={this.state.mainImage === this.state.dataProduct.image2? 'border border-warning' : ''} alt ='' style={{width: '100%', height: '100%'}} onClick ={() => this.setState({mainImage: this.state.dataProduct.image2})} />
                                     </div>
                                     <div className='col-4 mx-2' style={{height:'130px'}}>
-                                        <img src= {this.state.dataProduct.image3} alt='' style={{width: '100%', height: '100%'}} />
+                                        <img src= {this.state.dataProduct.image3} className={this.state.mainImage === this.state.dataProduct.image3? 'border border-warning' : ''} alt='' style={{width: '100%', height: '100%'}} onClick ={() => this.setState({mainImage: this.state.dataProduct.image3})} />
                                     </div>
                                 </div>
                             </div>
@@ -154,3 +169,7 @@ export default class ProductPage extends React.Component{
         )
     }
 }
+
+const mapDispatchToProps = {getDataCart}
+
+export default connect('', mapDispatchToProps)(ProductPage)

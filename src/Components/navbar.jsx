@@ -1,44 +1,33 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faShoppingBag, faHeart, faUser, faBars, faWindowRestore} from '@fortawesome/free-solid-svg-icons';
+import { faShoppingBag, faHeart, faUser, faBars, faEye, faEyeSlash} from '@fortawesome/free-solid-svg-icons';
 import { Link} from 'react-router-dom';
 import axios from 'axios';
 import LinkAPI from './../Supports/Constants/LinkAPI'
 import {Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
+import { connect } from 'react-redux'
 
 
-export default class Navbar extends React.Component{
+class Navbar extends React.Component{
 
     state = {
         username: null,
         error: null,
         showModal: false,
-        dataKeranjang: null,
-        keranjang: 0
+        keranjang: null,
+        showPassword: false,
     }
 
     componentDidMount(){
         this.getUsername()
+        this.getCurrentTotalCarts()
     }
+
 
     getUsername = () => {
         // Ambil ID dari local storage
-        // ambil kerannjang
+
         let id = localStorage.getItem('id')
-        if(id){
-            axios.get(`http://localhost:2000/carts?idUser=${id}`)
-            .then((res) => {
-                this.setState({dataKeranjang: res.data})
-                this.state.dataKeranjang.forEach((value, index)=>{
-                    let keranjangSekarang = this.state.keranjang
-                    let tambahKeranjang = this.state.dataKeranjang[index].quantity
-                    this.setState({keranjang : keranjangSekarang + tambahKeranjang })
-                })
-            })
-            .catch((err) =>{
-                console.log(err)
-            })
-        }
         // ambil username
         if(id){
             axios.get(LinkAPI + `/${id}`) //ngambil di id berapa lewat page
@@ -48,6 +37,21 @@ export default class Navbar extends React.Component{
             .catch((err) => {
                 console.log(err)
             })   
+        }
+    }
+
+    getCurrentTotalCarts = () => {
+        let id = localStorage.getItem('id')
+
+        if(id){
+            axios.get(`http://localhost:2000/carts?idUser=${id}`)
+            .then((res) => {
+                this.setState({keranjang: res.data.length})
+                console.log(this.state.keranjang)
+            })
+            .catch((err) => {
+                console.log(err)
+            })
         }
     }
 
@@ -108,7 +112,9 @@ export default class Navbar extends React.Component{
             localStorage.removeItem('id')
             window.location = '/'
         }
-    }
+    }            
+        
+    
     render(){
         return(
             <>
@@ -181,12 +187,16 @@ export default class Navbar extends React.Component{
                                     </span>
                                     {/* show angka keranjang */}
                                     {
-                                        this.state.keranjang !== 0?
-                                            <span className='text-white rounded-circle d-flex justify-content-center funniture-font-size-12' style={{backgroundColor: '#d9534f', width:'18px', position: 'relative', left:'-15px', top:'-8px'}}>
-                                                {this.state.keranjang}
-                                            </span>
-                                        :
-                                            null
+                                                    this.props.carts.data?
+                                                        <span className='text-white rounded-circle d-flex justify-content-center funniture-font-size-12' style={{backgroundColor: '#d9534f', width:'18px', position: 'relative', left:'-12px', top:'-8px'}}>
+                                                            {this.props.carts.data.length}
+                                                        </span>
+                                                        
+                                                    :
+                                                        <span className='text-white rounded-circle d-flex justify-content-center funniture-font-size-12' style={{backgroundColor: '#d9534f', width:'18px', position: 'relative', left:'-12px', top:'-8px'}}>
+                                                            {this.state.keranjang}
+                                                        </span>   
+                                                                
                                     }
                                        
                                 </div>
@@ -246,8 +256,11 @@ export default class Navbar extends React.Component{
                             </div>
                             <div className='mt-2'>
                                 <h6>password</h6>
-                                <input type='password' ref='loginPassword' placeholder='Masukan password' className='form form-control' />
-                                <p className='text-danger mt-1'>
+                                <input type={this.state.showPassword? 'text' : 'password'} ref='loginPassword' placeholder='Masukan password' className='form form-control'  />                            
+                                <button className='btn shadow-none mt-n3' onClick={() => this.setState({showPassword: !this.state.showPassword})} style={{position: 'relative', left:'420px', bottom:'25px'}}>
+                                    <FontAwesomeIcon icon={this.state.showPassword? faEyeSlash : faEye}  /> 
+                                </button>
+                                <p className='text-danger mt-n3'>
                                     {
                                         this.state.error?
                                             this.state.error
@@ -268,3 +281,11 @@ export default class Navbar extends React.Component{
         )
     }
 }
+
+const mapStateToProps = (state) => {
+    return{
+        carts: state.carts
+    }
+}
+
+export default connect(mapStateToProps, '')(Navbar)

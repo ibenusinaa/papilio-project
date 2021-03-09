@@ -142,7 +142,7 @@ export default class KatalogProduk extends React.Component{
                                     <div className="card-text font-weight-bold mt-n3 rounded text-white d-flex justify-content-center" style={{backgroundColor: '#d9534f', width:'45px', position: 'relative', top: '-310px', left: '-12px'}}>
                                         {value.diskon}%
                                     </div>
-                                    <span className="card-text">stok: {value.stock}</span>
+                                    <span className="card-text">{value.stock} stok tersisa</span>
                                 </div>
                             </div>
                         </div>
@@ -160,7 +160,7 @@ export default class KatalogProduk extends React.Component{
                                     <h5 className="card-title">{value.brand}</h5>
                                     <p className="card-text mt-n3">{value.nama}</p>
                                     <p className="card-text"> Rp{value.price.toLocaleString()}</p>
-                                    <p className="card-text">stok: {value.stock}</p>
+                                    <p className="card-text">{value.stock} stok tersedia</p>
                                 </div>
                             </div>
                         </div>
