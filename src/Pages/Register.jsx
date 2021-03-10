@@ -3,7 +3,6 @@ import Axios from 'axios';
 import LinkAPI from '../Supports/Constants/LinkAPI';
 import PhoneNumberValidator from './../Supports/Functions/phoneNumber'
 import EmailValidator from './../Supports/Functions/emailValidator'
-import { Redirect } from 'react-router';
 
 
 export default class Register extends React.Component{

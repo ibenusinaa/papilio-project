@@ -1,7 +1,6 @@
 import React from 'react'
 import axios from 'axios'
 import swal from 'sweetalert';
-import { Link } from 'react-router-dom'
 
 export default class CartPage extends React.Component{
 
@@ -121,6 +120,72 @@ export default class CartPage extends React.Component{
               
             }
           });
+    }
+
+    createTransaction = () =>{
+        // 1. push ke db array transaction
+        // get id user dulu
+        let idUser = localStorage.getItem('id')
+
+        // get date
+        let date = new Date() //buat nyari tanggal
+        date = date.toString()
+
+        let newDate = date.split(' ')[2] + '-' + date.split(' ')[1] + '-'  + date.split(' ')[3] + '-' + date.split(' ')[4]
+        //split pertama ambil tanggal, split kedua ambil bulan, split ketiga ambil tahu, split ke empat ambil jam
+
+        // get total price dari state, karena sudah disetstate ketika di function order summary
+        let totalPrice = this.state.totalPrice
+
+        // get detail items, mapping state dataCarts
+        let detailItems = this.state.dataCarts.map((value, index)=> {
+            return{
+                productName: this.state.dataProducts[index].nama,
+                productBrand: this.state.dataProducts[index].brand,
+                productPrice: this.state.dataProducts[index].price,
+                productDiscount: this.state.dataProducts[index].diskon,
+                productQuantity: value.quantity,
+                productImage: this.state.dataProducts[index].image1
+            }
+        })
+
+        const dataToSend = {
+            idUser: idUser,
+            status: "unpaid",
+            createdAt: newDate,
+            total: totalPrice,
+            detail: detailItems
+        }
+
+        axios.post('http://localhost:2000/transactions', dataToSend)
+        .then((res) => {
+            // setelah ngepost, lanjut kita update stocknya, stok awal dikurangi stok yang dibel
+            let idTransaction = res.data.id //ini buat redirect kalo udah pencet checkout
+
+            // update stok, butuh stok awal sama quantity yang dibeli
+            this.state.dataCarts.forEach((value, index) => {
+                let stokSebelumnya = this.state.dataProducts[index].stock
+                let stokTerbaru = stokSebelumnya - value.quantity
+
+                axios.patch(`http://localhost:2000/products/${value.idProduct}`, {stock: stokTerbaru})
+                .then((res) =>{
+                    // udah berhasil update stock hapus carts
+                    axios.delete(`http://localhost:2000/carts/${value.id}`)
+                    .then((res) =>{
+                        window.location = '/payment/' + idTransaction
+                    })
+                    .catch((err) =>{
+                        console.log(err)
+                    })
+                })
+                .catch((err) => {
+                    console.log(err)
+                })
+            })  
+        })
+        .catch((err) => {
+            console.log(err)
+        })
     }
 
     // showProduct = () =>{
@@ -262,9 +327,9 @@ export default class CartPage extends React.Component{
                                             <input type='button' value='Continue Shopping' className ='btn btn-outline-dark' />
                                         </div>
                                         <div className = 'ml-3'>
-                                            <Link to ='/payment'>
-                                                <input type='button' value='Checkout' className ='btn btn-warning' />
-                                            </Link>
+                                            {/* <Link to ='/payment'> */}
+                                                <input type='button' value='Checkout' className ='btn btn-warning' onClick={this.createTransaction} />
+                                            {/* </Link> */}
                                         </div>
                                 </div>
                             </div>

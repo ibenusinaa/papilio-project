@@ -1,6 +1,10 @@
 import axios from 'axios'
 import React from 'react'
 import { connect } from 'react-redux'
+import {Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEye, faEyeSlash} from '@fortawesome/free-solid-svg-icons';
+import LinkAPI from './../Supports/Constants/LinkAPI'
 
 // Action Redux
 import { getDataCart } from './../redux/Actions/CartAction' 
@@ -10,6 +14,7 @@ class ProductPage extends React.Component{
     state = {
         dataProduct: null,
         mainImage: null,
+        showModal: false,
     }
 
     componentDidMount(){
@@ -69,12 +74,35 @@ class ProductPage extends React.Component{
             let idUser = localStorage.getItem('id')
             let quantity = 1
             if(idUser === null){
-                window.location = '/register'
+                this.setState({showModal: true})
+            }else{
+                this.props.getDataCart(idProduct, idUser, quantity)
             }
-
-            this.props.getDataCart(idProduct, idUser, quantity)
     }
 
+    onLogin = () => {
+        let inputUsername = this.refs.loginUsername.value
+        let inputPassword = this.refs.loginPassword.value
+
+        if(inputUsername === '' || inputPassword === ''){
+            this.setState({error: 'Username/Password belum diisi'})
+        }else{
+            axios.get(LinkAPI + '?username=' + inputUsername + '&password=' + inputPassword)
+            .then((res) => {
+                if(res.data.length === 1){
+                    console.log(res.data)
+                    localStorage.setItem('id', res.data[0].id)
+                    this.setState({showModal: false})
+                    window.location = this.props.location.pathname
+                }else{
+                    this.setState({error: 'Username atau Password salah'})
+                }
+            })
+            .catch((err) =>{
+                console.log(err)
+            })
+        }
+    }
 
     render(){
         return(
@@ -163,9 +191,51 @@ class ProductPage extends React.Component{
                             </div>
                         </div>
                     </div>
+
+
+                    {/* MODAL */}
+                    <Modal toggle={() => this.setState({showModal: false})} isOpen={this.state.showModal}>
+                    <ModalHeader className='d-flex justify-content-center'>Login</ModalHeader>
+                        <ModalBody>
+                            <div>
+                                <h6>username</h6>
+                                <input type='text' ref='loginUsername' placeholder='Masukan username' className='form form-control' />
+                            </div>
+                            <div className='mt-2'>
+                                <h6>password</h6>
+                                <input 
+                                    type={this.state.showPassword? 'text' : 'password'} ref='loginPassword' placeholder='Masukan password' className='form form-control'  />                            
+                                <div className ='d-flex justify-content-end'>
+                                    <button 
+                                        className='btn shadow-none mt-n3' 
+                                        onClick={() => this.setState({showPassword: !this.state.showPassword})} 
+                                        style={{position: 'relative', bottom:'25px'}}>
+                                        <FontAwesomeIcon icon={this.state.showPassword? faEyeSlash : faEye}  /> 
+                                    </button>
+                                </div>
+                                <p className='text-danger mt-n3'>
+                                    {
+                                        this.state.error?
+                                            this.state.error
+                                        :
+                                            null
+                                    }
+                                </p>
+                            </div>
+                            <div className='d-flex justify-content-end'>
+                                <input type='button' value='Login' className='btn btn-success mt-3' onClick={this.onLogin} />
+                            </div>
+                        </ModalBody>
+                    <ModalFooter>
+                            ©Papilio 2021
+                    </ModalFooter>
+                </Modal>
                 </div>
+                
             :
                 null
+
+            
         )
     }
 }

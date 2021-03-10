@@ -63,7 +63,7 @@
       "nama": "Sofa Rec 3s ",
       "brand": "Ramkilde",
       "category": "Sofa",
-      "stock": 10,
+      "stock": 14,
       "price": 8300000,
       "diskon": 10,
       "weight": 8000,
@@ -76,7 +76,7 @@
       "nama": "Sofa Rec 1s Brown ",
       "brand": "Olsson",
       "category": "Sofa",
-      "stock": 9,
+      "stock": 19,
       "price": 3600000,
       "diskon": 10,
       "weight": 3000,
@@ -128,7 +128,7 @@
       "nama": "Lemari pakaian 2 pintu, putih",
       "brand": "KLEPPSTAD",
       "category": "Lemari",
-      "stock": 20,
+      "stock": 19,
       "price": 1400000,
       "diskon": 0,
       "weight": 3000,
@@ -154,7 +154,7 @@
       "nama": "Lemari pakaian 3 pintu, putih",
       "brand": "BRIMNES",
       "category": "Lemari",
-      "stock": 4,
+      "stock": 3,
       "price": 2600000,
       "diskon": 0,
       "weight": 3000,
@@ -167,7 +167,7 @@
       "nama": "Lemari terbuka, abu-abu",
       "brand": "BRYGGJA",
       "category": "Lemari",
-      "stock": 20,
+      "stock": 17,
       "price": 4000000,
       "diskon": 25,
       "weight": 3000,
@@ -180,7 +180,7 @@
       "nama": "Lemari pakaian 2 pintu, coklat",
       "brand": "PAX",
       "category": "Lemari",
-      "stock": 10,
+      "stock": 9,
       "price": 9000000,
       "diskon": 0,
       "weight": 3000,
@@ -193,7 +193,7 @@
       "nama": "Meja kerja, putih",
       "brand": "MICKE",
       "category": "Meja Kerja Rumah",
-      "stock": 6,
+      "stock": 5,
       "price": 1500000,
       "diskon": 0,
       "weight": 3000,
@@ -206,7 +206,7 @@
       "nama": "Meja kerja, hitam",
       "brand": "FREDDE",
       "category": "Meja Kerja Rumah",
-      "stock": 5,
+      "stock": 4,
       "price": 3500000,
       "diskon": 0,
       "weight": 3000,
@@ -232,7 +232,7 @@
       "nama": "Meja, hitam",
       "brand": "ARKELSTORP",
       "category": "Meja Kerja Rumah",
-      "stock": 3,
+      "stock": 2,
       "price": 3000000,
       "diskon": 0,
       "weight": 3000,
@@ -258,7 +258,7 @@
       "nama": "Lampu lantai sorot, nikel",
       "brand": "FLUGBO",
       "category": "Lampu Lantai",
-      "stock": 20,
+      "stock": 19,
       "price": 700000,
       "diskon": 0,
       "weight": 1000,
@@ -284,7 +284,7 @@
       "nama": "Lampu lantai, putih",
       "brand": "NYMÅNE",
       "category": "Lampu Lantai",
-      "stock": 12,
+      "stock": 11,
       "price": 1000000,
       "diskon": 0,
       "weight": 3000,
@@ -297,7 +297,7 @@
       "nama": "Lampu lantai/baca, nikel",
       "brand": "VIRRMO",
       "category": "Lampu Lantai",
-      "stock": 7,
+      "stock": 6,
       "price": 600000,
       "diskon": 10,
       "weight": 3000,
@@ -310,7 +310,7 @@
       "nama": "Lampu lantai/ baca, aluminium",
       "brand": "LERSTA",
       "category": "Lampu Lantai",
-      "stock": 10,
+      "stock": 8,
       "price": 1000000,
       "diskon": 0,
       "weight": 3000,
@@ -319,43 +319,82 @@
       "image3": "https://d2xjmi1k71iy2m.cloudfront.net/dairyfarm/id/images/682/0468295_PE611365_S4.jpg"
     }
   ],
-  "carts": [
+  "carts": [],
+  "transactions": [
     {
-      "idProduct": "1",
       "idUser": "4",
-      "quantity": 3,
+      "status": "paid",
+      "createdAt": "09-Mar-2021-17:44:20",
+      "total": 1940000,
+      "detail": [
+        {
+          "productName": "Lemari pakaian 2 pintu, putih",
+          "productBrand": "KLEPPSTAD",
+          "productPrice": 1400000,
+          "productDiscount": 0,
+          "productQuantity": 1,
+          "productImage": "https://d2xjmi1k71iy2m.cloudfront.net/dairyfarm/id/images/333/0733324_PE748781_S4.jpg"
+        },
+        {
+          "productName": "Lampu lantai/baca, nikel",
+          "productBrand": "VIRRMO",
+          "productPrice": 600000,
+          "productDiscount": 10,
+          "productQuantity": 1,
+          "productImage": "https://d2xjmi1k71iy2m.cloudfront.net/dairyfarm/id/images/594/0859437_PE780906_S4.jpg"
+        }
+      ],
       "id": 1
     },
     {
-      "idProduct": "7",
       "idUser": "4",
-      "quantity": 2,
+      "status": "unpaid",
+      "createdAt": "09-Mar-2021-23:58:43",
+      "total": 4000000,
+      "detail": [
+        {
+          "productName": "Lemari terbuka, abu-abu",
+          "productBrand": "BRYGGJA",
+          "productPrice": 4000000,
+          "productDiscount": 25,
+          "productQuantity": 1,
+          "productImage": "https://d2xjmi1k71iy2m.cloudfront.net/dairyfarm/id/images/100/0610059_PE689974_S4.jpg"
+        },
+        {
+          "productName": "Lampu lantai, putih",
+          "productBrand": "NYMÅNE",
+          "productPrice": 1000000,
+          "productDiscount": 0,
+          "productQuantity": 1,
+          "productImage": "https://d2xjmi1k71iy2m.cloudfront.net/dairyfarm/id/images/840/0684005_PE720968_S4.jpg"
+        }
+      ],
       "id": 2
     },
     {
-      "idProduct": "17",
       "idUser": "4",
-      "quantity": 1,
+      "status": "paid",
+      "createdAt": "10-Mar-2021-00:31:28",
+      "total": 10470000,
+      "detail": [
+        {
+          "productName": "Sofa Rec 3s ",
+          "productBrand": "Ramkilde",
+          "productPrice": 8300000,
+          "productDiscount": 10,
+          "productQuantity": 1,
+          "productImage": "https://jysk.co.id/27681-thickbox_default/SOFA_REC_3S_RAMKILDE_211X101X99CM_BROWN.jpg"
+        },
+        {
+          "productName": "Meja, hitam",
+          "productBrand": "ARKELSTORP",
+          "productPrice": 3000000,
+          "productDiscount": 0,
+          "productQuantity": 1,
+          "productImage": "https://d2xjmi1k71iy2m.cloudfront.net/dairyfarm/id/images/606/0260689_PE404570_S4.jpg"
+        }
+      ],
       "id": 3
-    },
-    {
-      "idProduct": "14",
-      "idUser": "4",
-      "quantity": 1,
-      "id": 4
-    },
-    {
-      "idProduct": "2",
-      "idUser": "4",
-      "quantity": 3,
-      "id": 5
-    },
-    {
-      "idProduct": "4",
-      "idUser": "4",
-      "quantity": 1,
-      "id": 6
     }
-  ],
-  "transactions": []
+  ]
 }

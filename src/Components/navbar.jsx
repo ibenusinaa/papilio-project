@@ -113,6 +113,16 @@ class Navbar extends React.Component{
             window.location = '/'
         }
     }            
+
+    toProfile = () =>{
+        let id = localStorage.getItem('id')
+
+        if(id){
+            window.location= '/userprofile'
+        }else{
+            this.setState({showModal: true})
+        }
+    }
         
     
     render(){
@@ -155,12 +165,12 @@ class Navbar extends React.Component{
                 </div>
                 {/* navbar kuning */}
                 <div className='bg-warning'>
-                    <div className='container d-none d-md-block d-sm-none'>
-                        <div className='row align-items-center' style={{height: '70px'}}>
+                    <div className='container d-block d-md-block d-sm-block'>
+                        <div className='row align-items-center justify-content-between' style={{height: '70px'}}>
                             <div className = 'col-2'>
                                 <span><Link to = '/' className ='text-body funniture-font-size-20 funniture-font-bold'>Papilio</Link></span>
                             </div>
-                            <div className = 'col-5'>
+                            <div className = 'col-5 d-none d-sm-none d-md-block'>
                                 <span className = 'mr-2'><Link to ='/katalogproduk' className = 'text-body'>Produk</Link></span>
                                 <span className = 'mx-2'>Ruangan</span>
                                 <span className = 'mx-2'>Dekorasi</span>
@@ -172,15 +182,15 @@ class Navbar extends React.Component{
                                         <input type="text" className="form-control d-none d-md-block" placeholder="cari produk" />
                                     </span>
                                     <span className= 'mr-2'>
-                                        <input type='button' value='Search' className='btn btn-light'></input>
+                                        <input type='button' value='Search' className='btn btn-light d-none d-sm-none d-md-block'></input>
                                     </span>
-                                    <span className= 'mx-2'>
-                                        <FontAwesomeIcon icon={faUser} className ='fa-lg' />
+                                    <span className= 'mx-2 funniture-clickable-element'>
+                                        <FontAwesomeIcon icon={faUser} className ='fa-lg text-body' onClick={this.toProfile} />
                                     </span>
                                     <span className= 'mx-2'>
                                         <FontAwesomeIcon icon={faHeart} className ='fa-lg' />
                                     </span>
-                                    <span className= 'mx-2'>
+                                    <span className= 'ml-2'>
                                         <Link to = '/cartpage'>
                                             <FontAwesomeIcon icon={faShoppingBag} className ='fa-lg text-body' />
                                         </Link>
@@ -188,13 +198,17 @@ class Navbar extends React.Component{
                                     {/* show angka keranjang */}
                                     {
                                                     this.props.carts.data?
-                                                        <span className='text-white rounded-circle d-flex justify-content-center funniture-font-size-12' style={{backgroundColor: '#d9534f', width:'18px', position: 'relative', left:'-12px', top:'-8px'}}>
-                                                            {this.props.carts.data.length}
+                                                        <span 
+                                                            className='text-white rounded-circle d-flex justify-content-center funniture-font-size-12' 
+                                                            style={{backgroundColor: '#d9534f', width:'18px', position: 'relative', left:'-8px', top:'-8px'}}>
+                                                                {this.props.carts.data.length}
                                                         </span>
                                                         
                                                     :
-                                                        <span className='text-white rounded-circle d-flex justify-content-center funniture-font-size-12' style={{backgroundColor: '#d9534f', width:'18px', position: 'relative', left:'-12px', top:'-8px'}}>
-                                                            {this.state.keranjang}
+                                                        <span 
+                                                            className='text-white rounded-circle d-flex justify-content-center funniture-font-size-12' 
+                                                            style={{backgroundColor: '#d9534f', width:'18px', position: 'relative', left:'-8px', top:'-8px'}}>
+                                                                {this.state.keranjang}
                                                         </span>   
                                                                 
                                     }
@@ -203,44 +217,13 @@ class Navbar extends React.Component{
                             </div>
                         </div>
                     </div>
-                    {/* mobile version navbar kuning */}
-                    <div className='d-md-none d-sm-flex d-flex align-items-center justify-content-between' style={{height: '70px'}}>
-                        <div className = 'ml-2'>
-                        <span><Link to = '/' className ='text-body funniture-font-size-20 funniture-font-bold'>Papilio</Link></span>
-                        </div>
-                        <div>
-                            <div className='d-flex justify-content-end align-items-center'>
-                                <span>
-                                    <input type="email" className="form-control d-none d-md-block" placeholder="cari produk" />
-                                </span>
-                                <span className= 'mx-3 d-md-block d-none'>
-                                    <FontAwesomeIcon icon={faUser} className ='fa-lg' />
-                                </span>
-                                <span className= 'mx-3'>
-                                    <FontAwesomeIcon icon={faHeart} className ='fa-lg' />
-                                </span>
-                                <span className= 'mx-3'>
-                                    <FontAwesomeIcon icon={faShoppingBag} className ='fa-lg' />
-                                </span>
-                                <span className= 'mx-3 d-block d-md-none'>
-                                    <FontAwesomeIcon icon={faBars} className ='fa-lg' />
-                                </span>
-                                {
-                                    this.state.keranjang !== 0?
-                                        <span className='text-white rounded-circle d-flex justify-content-center funniture-font-size-12' style={{backgroundColor: '#d9534f', width:'18px', position: 'relative', left:'-74px', top:'-8px'}}>
-                                            {this.state.keranjang}
-                                        </span>
-                                    :
-                                        null
-                                }
-                            </div>
-                        </div>
-                    </div>
-                    <div className='d-block d-md-none mx-2' style={{height: '50px'}}>
-                        <div className ="input-group">
-                            <input type="text" placeholder="cari produk" className='form-control'/>
-                            <div className = "input-group-append">
-                                    <input type="button" value="search" className="btn btn-light" />
+                    <div className='container'>
+                        <div className='d-block d-md-none mx-2' style={{height: '50px'}}>
+                            <div className ="input-group">
+                                <input type="text" placeholder="cari produk" className='form-control'/>
+                                <div className = "input-group-append">
+                                        <input type="button" value="search" className="btn btn-light" />
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -256,10 +239,16 @@ class Navbar extends React.Component{
                             </div>
                             <div className='mt-2'>
                                 <h6>password</h6>
-                                <input type={this.state.showPassword? 'text' : 'password'} ref='loginPassword' placeholder='Masukan password' className='form form-control'  />                            
-                                <button className='btn shadow-none mt-n3' onClick={() => this.setState({showPassword: !this.state.showPassword})} style={{position: 'relative', left:'420px', bottom:'25px'}}>
-                                    <FontAwesomeIcon icon={this.state.showPassword? faEyeSlash : faEye}  /> 
-                                </button>
+                                <input 
+                                    type={this.state.showPassword? 'text' : 'password'} ref='loginPassword' placeholder='Masukan password' className='form form-control'  />                            
+                                <div className ='d-flex justify-content-end'>
+                                    <button 
+                                        className='btn shadow-none mt-n3' 
+                                        onClick={() => this.setState({showPassword: !this.state.showPassword})} 
+                                        style={{position: 'relative', bottom:'25px'}}>
+                                        <FontAwesomeIcon icon={this.state.showPassword? faEyeSlash : faEye}  /> 
+                                    </button>
+                                </div>
                                 <p className='text-danger mt-n3'>
                                     {
                                         this.state.error?

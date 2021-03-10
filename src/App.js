@@ -8,6 +8,8 @@ import ProductPage from './Pages/ProductPage'
 import KatalogProduk from './Pages/KatalogProduk'
 import CartPage from './Pages/CartPage'
 import Payment from './Pages/payment'
+import UserProfile from './Pages/UserProfile'
+
 // css
 import './Supports/Stylesheets/Utils.css'
 import './Supports/Stylesheets/LandingPage.css'
@@ -19,6 +21,7 @@ import { createStore, applyMiddleware } from 'redux'
 import { Provider } from 'react-redux'
 import thunk from 'redux-thunk'
 import allReducer from './redux/reducers/index'
+
 
 const store = createStore(allReducer, applyMiddleware(thunk))
 
@@ -37,6 +40,7 @@ export default class App extends React.Component{
               <Route path='/katalogproduk' component={KatalogProduk} />
               <Route path='/cartpage' component={CartPage} />
               <Route path='/payment' component={Payment} />
+              <Route path='/userprofile' component={UserProfile} />
             </Switch>
             <Footer />       
           </BrowserRouter>
