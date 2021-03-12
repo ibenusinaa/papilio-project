@@ -12,7 +12,7 @@ export default class UserProfile extends React.Component{
                     <div className="container">  
                         <div className='p-5 row border-border-black'>
                             <div className='mx-2'>
-                                <Link to ='/userprofile/profile'>
+                                <Link to ='/userprofile'>
                                     <button className='btn btn-warning'>
                                         Profile
                                     </button>
@@ -36,7 +36,7 @@ export default class UserProfile extends React.Component{
                         <hr className='mt-n4' />
                         <div className='col-12'>
                             <Switch>
-                                <Route exact path='/userprofile/profile' component={Profile} />
+                                <Route exact path='/userprofile' component={Profile} />
                                 <Route path='/userprofile/transactionhistory' component={TransactionHistory} />
                                 <Route path='/userprofile/address' component={Address} />
                             </Switch>

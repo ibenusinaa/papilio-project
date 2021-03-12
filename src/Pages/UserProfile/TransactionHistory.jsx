@@ -1,5 +1,6 @@
 import axios from 'axios'
 import React from 'react'
+import { Route } from 'react-router';
 import {Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 
 export default class TransactionHistory extends React.Component{
@@ -29,6 +30,10 @@ export default class TransactionHistory extends React.Component{
         }
     }
 
+    paymentRedirect = (idTransaction) =>{
+        window.location = `/payment/${idTransaction}`
+    }
+
     render(){
         if(this.state.dataTrans === null){
             return(
@@ -49,7 +54,7 @@ export default class TransactionHistory extends React.Component{
                                     this.state.dataTrans.map((value, index) => {
                                         return(
                                             <div key={index} className='border border-black rounded my-3 shadow-sm bg-white'>
-                                                <div className='row justify-content-between'>
+                                                <div className='row justify-content-between align-items-center'>
                                                     <div className='p-3 d-flex'>
                                                         <div className='ml-4 mr-2'>Belanja tanggal:</div> 
                                                         <div className='mx-2'>{value.createdAt}</div>
@@ -57,7 +62,16 @@ export default class TransactionHistory extends React.Component{
                                                             value.status === 'paid'?
                                                                 <div className='mx-2 bg-success rounded text-white d-flex justify-content-center' style={{width: '60px', height: '25px'}}>Selesai</div>
                                                             :
-                                                                <div className='mx-2 bg-danger rounded text-white d-flex justify-content-center' style={{width: '120px', height: '25px'}}>Belum dibayar</div>
+                                                                <div className='d-flex justify-content-center'>
+                                                                    <div className='mx-2 bg-danger rounded text-white d-flex justify-content-center' style={{width: '120px', height: '25px'}}>
+                                                                        Belum dibayar
+                                                                    </div>
+                                                                    <div className='mx-2 border bg-info border-black rounded text-white d-flex justify-content-center funniture-clickable-element' 
+                                                                        style={{width: '130px', height: '25px'}}
+                                                                        onClick={() => this.paymentRedirect(value.id)}>
+                                                                        Bayar Sekarang?
+                                                                    </div>
+                                                                </div>
                                                         }
                                         
                                                     </div>
@@ -82,14 +96,14 @@ export default class TransactionHistory extends React.Component{
                                                                         <p className='mt-n1'>
                                                                             {
                                                                                 value.productDiscount === 0?
-                                                                                    `Rp${value.productPrice.toLocaleString()} x ${value.productQuantity} item`
+                                                                                    `Rp${value.productPrice.toLocaleString('id-ID')} x ${value.productQuantity} item`
                                                                                 :
                                                                                     <div>
                                                                                         <div>
-                                                                                            Rp{(value.productPrice - ((value.productPrice * value.productDiscount)/100)).toLocaleString()} x {value.productQuantity} item
+                                                                                            Rp{(value.productPrice - ((value.productPrice * value.productDiscount)/100)).toLocaleString('id-ID')} x {value.productQuantity} item
                                                                                         </div>
                                                                                         <div>
-                                                                                            {value.productDiscount}% OFF from {value.productPrice.toLocaleString()}
+                                                                                            {value.productDiscount}% OFF from Rp{value.productPrice.toLocaleString('id-ID')}
                                                                                         </div>
                                                                                     </div>
                                                                                     
@@ -109,7 +123,7 @@ export default class TransactionHistory extends React.Component{
                                                         <p className='font-weight-bold'>Total Belanja</p>
                                                     </div>
                                                     <div>
-                                                        <p>Rp{value.total.toLocaleString()}</p>
+                                                        <p>Rp{value.total.toLocaleString('id-ID')}</p>
                                                     </div>
                                                 </div>
                                             </div>   

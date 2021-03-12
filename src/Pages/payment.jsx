@@ -1,5 +1,6 @@
 import axios from 'axios'
 import React from 'react'
+import swal from 'sweetalert';
 
 export default class Payment extends React.Component{
 
@@ -12,12 +13,17 @@ export default class Payment extends React.Component{
     }
 
     getDataTransaction = () =>{
+        let id = localStorage.getItem('id')
         let idTransaction = this.props.location.pathname.split('/')[2]
 
         axios.get(`http://localhost:2000/transactions/${idTransaction}`)
         .then((res)=>{
-            this.setState({dataTransaction: res.data})
-            console.log(this.state.dataTransaction)
+            if(id === res.data.idUser){
+                this.setState({dataTransaction: res.data})
+
+            }else{
+                window.history.back()
+            }
         })
         .catch((err)=>{
             console.log(err)
@@ -38,6 +44,14 @@ export default class Payment extends React.Component{
         axios.patch(`http://localhost:2000/transactions/${idTransaction}`, {status: 'paid', createdAt: newDate})
         .then((res)=>{
             console.log(res)
+            swal({
+                title: "Payment Success!",
+                icon: "success",
+                button: "Ok",
+            });
+            
+            setTimeout(function(){window.location = '/userprofile/transactionhistory'}, 3000);
+
         })
         .catch((err)=>{
             console.log(err)

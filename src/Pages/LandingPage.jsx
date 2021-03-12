@@ -14,11 +14,15 @@ export default class LandingPage extends React.Component{
     }
 
     onGetData = () =>{
+        let sortProduct
         axios.get(LinkAPIProducts)
         .then((res) => {
             // console.log(res.data)
             this.setState({dataProduct: res.data})
-            console.log(this.state.dataProduct)
+            sortProduct = this.state.dataProduct.sort((a , b) => {
+                return a.price - b.price
+            })
+            this.setState({dataProduct: sortProduct})
         })
         .catch((err) => {
             console.log(err)
@@ -28,7 +32,7 @@ export default class LandingPage extends React.Component{
     mapImage = () => {
          if(this.state.dataProduct){
             return this.state.dataProduct.map((value, index) => {
-                if(value.diskon > 0){
+                if(index < 10){
                     return(
      
                      <div key={index} className='mb-5' style={{width: '18rem'}}>

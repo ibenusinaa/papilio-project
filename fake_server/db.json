@@ -115,7 +115,7 @@
       "nama": "Set Kursi Santai ",
       "brand": "Bran",
       "category": "Sofa",
-      "stock": 8,
+      "stock": 7,
       "price": 2200000,
       "diskon": 10,
       "weight": 3000,
@@ -141,7 +141,7 @@
       "nama": "Lemari pakaian 3 pintu, putih",
       "brand": "KLEPPSTAD",
       "category": "Lemari",
-      "stock": 7,
+      "stock": 6,
       "price": 2000000,
       "diskon": 0,
       "weight": 3000,
@@ -348,8 +348,8 @@
     },
     {
       "idUser": "4",
-      "status": "unpaid",
-      "createdAt": "09-Mar-2021-23:58:43",
+      "status": "paid",
+      "createdAt": "10-Mar-2021-11:25:25",
       "total": 4000000,
       "detail": [
         {
@@ -395,6 +395,40 @@
         }
       ],
       "id": 3
+    },
+    {
+      "idUser": "4",
+      "status": "paid",
+      "createdAt": "10-Mar-2021-11:26:52",
+      "total": 2000000,
+      "detail": [
+        {
+          "productName": "Lemari pakaian 3 pintu, putih",
+          "productBrand": "KLEPPSTAD",
+          "productPrice": 2000000,
+          "productDiscount": 0,
+          "productQuantity": 1,
+          "productImage": "https://d2xjmi1k71iy2m.cloudfront.net/dairyfarm/id/images/535/0753594_PE748782_S4.jpg"
+        }
+      ],
+      "id": 4
+    },
+    {
+      "idUser": "4",
+      "status": "unpaid",
+      "createdAt": "10-Mar-2021-12:28:57",
+      "total": 1980000,
+      "detail": [
+        {
+          "productName": "Set Kursi Santai ",
+          "productBrand": "Bran",
+          "productPrice": 2200000,
+          "productDiscount": 10,
+          "productQuantity": 1,
+          "productImage": "https://cdn-m2.fabelio.com/catalog/product/b/a/bangkuo_bran_elodiemidgrey_1.jpg?auto=format&h=640&ixlib=react-9.0.3"
+        }
+      ],
+      "id": 5
     }
   ]
 }

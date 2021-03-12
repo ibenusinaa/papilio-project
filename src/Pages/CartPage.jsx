@@ -322,16 +322,22 @@ export default class CartPage extends React.Component{
                                     {/* Button here */}
                                     
                                 </div>
-                                <div className ='d-flex justify-content-center mt-4'>
-                                        <div>
-                                            <input type='button' value='Continue Shopping' className ='btn btn-outline-dark' />
+                                {
+                                    this.state.dataCarts.length === 0?
+                                        null
+                                    :
+                                        <div className ='d-flex justify-content-center mt-4'>
+                                            <div>
+                                                <input type='button' value='Continue Shopping' className ='btn btn-outline-dark' />
+                                            </div>
+                                            <div className = 'ml-3'>
+                                            
+                                                    <input type='button' value='Checkout' className ='btn btn-warning' onClick={this.createTransaction} />
+                                            </div>
                                         </div>
-                                        <div className = 'ml-3'>
-                                            {/* <Link to ='/payment'> */}
-                                                <input type='button' value='Checkout' className ='btn btn-warning' onClick={this.createTransaction} />
-                                            {/* </Link> */}
-                                        </div>
-                                </div>
+
+                                }
+                                
                             </div>
                         </div>
                     </div>
