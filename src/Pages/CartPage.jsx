@@ -56,7 +56,7 @@ export default class CartPage extends React.Component{
         this.state.dataCarts.forEach((value, index) => {
             totalItem += value.quantity
             if(this.state.dataProducts[index].diskon === 0){
-                totalPrice += (this.state.dataProducts[index].price * value.quantity)
+                totalPrice += (this.state.dataProducts[index].price * value.quantity )
             }else{
                 totalPrice += (this.state.dataProducts[index].price - ((this.state.dataProducts[index].price * this.state.dataProducts[index].diskon)/100))
             }

@@ -89,7 +89,7 @@
       "nama": "Sofa 2Seater ",
       "brand": "HELSINGBORG",
       "category": "Sofa",
-      "stock": 5,
+      "stock": 4,
       "price": 3600000,
       "diskon": 30,
       "weight": 3000,
@@ -128,7 +128,7 @@
       "nama": "Lemari pakaian 2 pintu, putih",
       "brand": "KLEPPSTAD",
       "category": "Lemari",
-      "stock": 19,
+      "stock": 18,
       "price": 1400000,
       "diskon": 0,
       "weight": 3000,
@@ -154,7 +154,7 @@
       "nama": "Lemari pakaian 3 pintu, putih",
       "brand": "BRIMNES",
       "category": "Lemari",
-      "stock": 3,
+      "stock": 2,
       "price": 2600000,
       "diskon": 0,
       "weight": 3000,
@@ -167,7 +167,7 @@
       "nama": "Lemari terbuka, abu-abu",
       "brand": "BRYGGJA",
       "category": "Lemari",
-      "stock": 17,
+      "stock": 16,
       "price": 4000000,
       "diskon": 25,
       "weight": 3000,
@@ -297,7 +297,7 @@
       "nama": "Lampu lantai/baca, nikel",
       "brand": "VIRRMO",
       "category": "Lampu Lantai",
-      "stock": 6,
+      "stock": 5,
       "price": 600000,
       "diskon": 10,
       "weight": 3000,
@@ -415,8 +415,8 @@
     },
     {
       "idUser": "4",
-      "status": "unpaid",
-      "createdAt": "10-Mar-2021-12:28:57",
+      "status": "cancelled",
+      "createdAt": "13-Mar-2021-12:28:57",
       "total": 1980000,
       "detail": [
         {
@@ -429,6 +429,82 @@
         }
       ],
       "id": 5
+    },
+    {
+      "idUser": "4",
+      "status": "paid",
+      "createdAt": "28-May-2021-09:42:34",
+      "total": 2600000,
+      "detail": [
+        {
+          "productName": "Lemari pakaian 3 pintu, putih",
+          "productBrand": "BRIMNES",
+          "productPrice": 2600000,
+          "productDiscount": 0,
+          "productQuantity": 1,
+          "productImage": "https://d2xjmi1k71iy2m.cloudfront.net/dairyfarm/id/images/767/0176787_PE329567_S4.jpg"
+        }
+      ],
+      "id": 6
+    },
+    {
+      "idUser": "4",
+      "status": "paid",
+      "createdAt": "28-May-2021-10:20:11",
+      "total": 2520000,
+      "detail": [
+        {
+          "productName": "Sofa 2Seater ",
+          "productBrand": "HELSINGBORG",
+          "productPrice": 3600000,
+          "productDiscount": 30,
+          "productQuantity": 1,
+          "productImage": "https://jysk.co.id/22234-thickbox_default/SOFA_2S_HELSINGBORG_160X85X69_CM__GREY.jpg"
+        }
+      ],
+      "id": 7
+    },
+    {
+      "idUser": "4",
+      "status": "unpaid",
+      "createdAt": "04-Jul-2021-17:47:25",
+      "total": 4400000,
+      "detail": [
+        {
+          "productName": "Lemari pakaian 2 pintu, putih",
+          "productBrand": "KLEPPSTAD",
+          "productPrice": 1400000,
+          "productDiscount": 0,
+          "productQuantity": 1,
+          "productImage": "https://d2xjmi1k71iy2m.cloudfront.net/dairyfarm/id/images/333/0733324_PE748781_S4.jpg"
+        },
+        {
+          "productName": "Lemari terbuka, abu-abu",
+          "productBrand": "BRYGGJA",
+          "productPrice": 4000000,
+          "productDiscount": 25,
+          "productQuantity": 1,
+          "productImage": "https://d2xjmi1k71iy2m.cloudfront.net/dairyfarm/id/images/100/0610059_PE689974_S4.jpg"
+        }
+      ],
+      "id": 8
+    },
+    {
+      "idUser": "4",
+      "status": "unpaid",
+      "createdAt": "13-Nov-2021-18:42:15",
+      "total": 540000,
+      "detail": [
+        {
+          "productName": "Lampu lantai/baca, nikel",
+          "productBrand": "VIRRMO",
+          "productPrice": 600000,
+          "productDiscount": 10,
+          "productQuantity": 1,
+          "productImage": "https://d2xjmi1k71iy2m.cloudfront.net/dairyfarm/id/images/594/0859437_PE780906_S4.jpg"
+        }
+      ],
+      "id": 9
     }
   ]
 }

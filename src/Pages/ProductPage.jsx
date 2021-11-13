@@ -30,6 +30,7 @@ class ProductPage extends React.Component{
             
         })
         
+        if(!this.state.ref) return;
     }
     
     addToCart = () => {
@@ -104,6 +105,8 @@ class ProductPage extends React.Component{
         }
     }
 
+
+
     render(){
         return(
             this.state.dataProduct?
@@ -117,13 +120,13 @@ class ProductPage extends React.Component{
                                     <img src= {this.state.mainImage} alt='' style={{width: '80%', height: '300px'}} />
                                 </div>
                                 <div className='d-flex col-12 mt-3' style={{height:'200px'}}>
-                                    <div className='col-4 ml-n2 mr-2' style={{height:'130px'}}>
+                                    <div className='col-4 ml-n2 mr-2 funniture-cursor-image' style={{height:'130px'}}>
                                         <img src= {this.state.dataProduct.image1} alt='' className={this.state.mainImage === this.state.dataProduct.image1? 'border border-warning' : ''} style={{width: '100%', height: '100%'}} onClick ={() => this.setState({mainImage: this.state.dataProduct.image1})} />
                                     </div>
-                                    <div className='col-4 mx-2' style={{height:'130px'}}>
+                                    <div className='col-4 mx-2 funniture-cursor-image' style={{height:'130px'}}>
                                         <img src= {this.state.dataProduct.image2} className={this.state.mainImage === this.state.dataProduct.image2? 'border border-warning' : ''} alt ='' style={{width: '100%', height: '100%'}} onClick ={() => this.setState({mainImage: this.state.dataProduct.image2})} />
                                     </div>
-                                    <div className='col-4 mx-2' style={{height:'130px'}}>
+                                    <div className='col-4 mx-2 funniture-cursor-image' style={{height:'130px'}}>
                                         <img src= {this.state.dataProduct.image3} className={this.state.mainImage === this.state.dataProduct.image3? 'border border-warning' : ''} alt='' style={{width: '100%', height: '100%'}} onClick ={() => this.setState({mainImage: this.state.dataProduct.image3})} />
                                     </div>
                                 </div>

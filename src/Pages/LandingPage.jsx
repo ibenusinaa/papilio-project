@@ -14,15 +14,11 @@ export default class LandingPage extends React.Component{
     }
 
     onGetData = () =>{
-        let sortProduct
         axios.get(LinkAPIProducts)
         .then((res) => {
             // console.log(res.data)
             this.setState({dataProduct: res.data})
-            sortProduct = this.state.dataProduct.sort((a , b) => {
-                return a.price - b.price
-            })
-            this.setState({dataProduct: sortProduct})
+            console.log(this.state.dataProduct)
         })
         .catch((err) => {
             console.log(err)
@@ -32,7 +28,7 @@ export default class LandingPage extends React.Component{
     mapImage = () => {
          if(this.state.dataProduct){
             return this.state.dataProduct.map((value, index) => {
-                if(index < 10){
+                if(value.diskon > 0){
                     return(
      
                      <div key={index} className='mb-5' style={{width: '18rem'}}>
@@ -89,11 +85,11 @@ export default class LandingPage extends React.Component{
                 <div>
                         {/* JUMBOTRON */}
                         <div className='d-flex align-items-center jumbotron-landing-page'>
-                            <div className="container text-center text-md-left">
+                            <div className="container text-center text-md-left funniture-text-jumbotron-animated">
                                 <h1 className='funniture-font-size-70'>
                                     Sale Up To 30%
                                 </h1>
-                                <input type='button' className='btn btn-warning' value='Shop Now!' />
+                                <Link to ='/katalogproduk/sale'> <input type='button' className='btn btn-warning' value='Shop Now!' /></Link>
                             </div>
                         </div>
                         <div>

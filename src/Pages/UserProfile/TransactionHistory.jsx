@@ -13,18 +13,52 @@ export default class TransactionHistory extends React.Component{
 
     componentDidMount(){
         this.getDataTransaction()
+        this.unpaidCheck()
     }
 
     getDataTransaction = () =>{
         let id = localStorage.getItem('id')
-
         if(id){
             axios.get(`http://localhost:2000/transactions?idUser=${id}`)
             .then((res)=>{
                 this.setState({dataTrans: res.data})
-                console.log(this.state.dataTrans[0].detail)
             })
             .catch((err)=>{
+                console.log(err)
+            })
+        }
+    }
+
+    unpaidCheck = () => {
+        let id = localStorage.getItem('id')
+        let idProdukDB
+        let date = new Date()
+        date = date.toString()
+
+        let newDate = date.split(' ')[2] //tanggal
+        console.log(newDate)
+        let unpaidCheckDate //ngambil tanggal checkout dibuat
+        if(id){
+            axios.get(`http://localhost:2000/transactions?idUser=${id}&status=unpaid`)
+            .then((res) => {
+                if(res){
+                    idProdukDB = res.data[0].id
+                    unpaidCheckDate = res.data[0].createdAt.split('-')[0]
+                    console.log(unpaidCheckDate)
+                    if((newDate - unpaidCheckDate) !== 0){
+                        axios.patch(`http://localhost:2000/transactions/${idProdukDB}`, {status: 'cancelled'})
+                        .then((res) => {
+                            console.log(res)
+                            this.getDataTransaction()
+                        })
+                        .catch((err) => {
+                            console.log(err)
+                        })
+                    }
+                }
+ 
+            })
+            .catch((err) => {
                 console.log(err)
             })
         }
@@ -62,16 +96,23 @@ export default class TransactionHistory extends React.Component{
                                                             value.status === 'paid'?
                                                                 <div className='mx-2 bg-success rounded text-white d-flex justify-content-center' style={{width: '60px', height: '25px'}}>Selesai</div>
                                                             :
-                                                                <div className='d-flex justify-content-center'>
-                                                                    <div className='mx-2 bg-danger rounded text-white d-flex justify-content-center' style={{width: '120px', height: '25px'}}>
-                                                                        Belum dibayar
+                                                                value.status === 'unpaid'?
+                                                                    <div className='d-flex justify-content-center'>
+                                                                        <div className='mx-2 bg-warning rounded text-white d-flex justify-content-center' style={{width: '120px', height: '25px'}}>
+                                                                            Belum dibayar
+                                                                        </div>
+                                                                        <div className='mx-2 border bg-info border-black rounded text-white d-flex justify-content-center funniture-clickable-element' 
+                                                                            style={{width: '130px', height: '25px'}}
+                                                                            onClick={() => this.paymentRedirect(value.id)}>
+                                                                            Bayar Sekarang?
+                                                                        </div>
                                                                     </div>
-                                                                    <div className='mx-2 border bg-info border-black rounded text-white d-flex justify-content-center funniture-clickable-element' 
-                                                                        style={{width: '130px', height: '25px'}}
-                                                                        onClick={() => this.paymentRedirect(value.id)}>
-                                                                        Bayar Sekarang?
+                                                                :
+                                                                    <div className='d-flex justify-content-center'>
+                                                                        <div className='mx-2 bg-danger rounded text-white d-flex justify-content-center' style={{width: '120px', height: '25px'}}>
+                                                                            Cancelled
+                                                                        </div>
                                                                     </div>
-                                                                </div>
                                                         }
                                         
                                                     </div>

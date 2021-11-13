@@ -174,7 +174,7 @@ class Navbar extends React.Component{
                                 <span className = 'mr-2'><Link to ='/katalogproduk' className = 'text-body'>Produk</Link></span>
                                 <span className = 'mx-2'>Ruangan</span>
                                 <span className = 'mx-2'>Dekorasi</span>
-                                <span className = 'mx-2'>Sale</span>
+                                <span className = 'mx-2'><Link to ='/sale' className = 'text-body'>Sale</Link></span>
                             </div>
                             <div className = 'col-5'>
                                 <div className='d-flex align-items-center justify-content-end'>
@@ -240,7 +240,10 @@ class Navbar extends React.Component{
                             <div className='mt-2'>
                                 <h6>password</h6>
                                 <input 
-                                    type={this.state.showPassword? 'text' : 'password'} ref='loginPassword' placeholder='Masukan password' className='form form-control'  />                            
+                                    type={this.state.showPassword? 'text' : 'password'} ref='loginPassword' 
+                                    placeholder='Masukan password' 
+                                    className='form form-control'  
+                                    />                            
                                 <div className ='d-flex justify-content-end'>
                                     <button 
                                         className='btn shadow-none mt-n3' 

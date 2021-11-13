@@ -16,8 +16,10 @@ export default class KatalogProduk extends React.Component{
     }
 
     componentDidMount(){
+
         this.onGetData()
         this.getCatAndBrand()
+        
     }
 
     onGetData = () =>{
@@ -97,10 +99,12 @@ export default class KatalogProduk extends React.Component{
             sortProduk = this.state.dataProduct.sort((a,b) => {
                 return b.price - a.price
             })
-        }else{
+        }else if(sort === 'Default'){
             sortProduk = this.state.dataProduct.sort((a,b) => {
                 return a.price - b.price
             })
+        }else{
+            sortProduk = this.state.dataProduct.filter(value => value.diskon > 0)
         }
         this.setState({dataProduct: sortProduk})
         this.setState({showModalSort: false})
@@ -213,7 +217,7 @@ export default class KatalogProduk extends React.Component{
                         <ModalBody className='px-5 py-5'>
                             <div className='text-center'>
                                 <h3>
-                                    Filter Data
+                                    Filter Produk
                                 </h3>
                             </div>
                             <div className = 'mt-3'>
@@ -253,6 +257,7 @@ export default class KatalogProduk extends React.Component{
                             <select class="form-control" ref='sortPrice' id="exampleFormControlSelect1">
                                 <option value='Low to High'>Low to High</option>
                                 <option value='High to Low'>High to Low</option>
+                                <option value='Sale'>Sale</option>
                                 <option value='Default'>Default</option>
                             </select>
                         </div>
